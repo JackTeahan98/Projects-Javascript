@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang='cs'>
+  <head>
+
+  <style>
+
+       p{color: black;
+         margin-bottom: 0%;}
+
+      h1{color: white;}
+
+    body{font-family: Verdana, Geneva, Tahoma, sans-serif;
+         background-color: #171716;}
+
+  .form1{margin-left: 20%;
+         padding:3%;
+         background-color: darkslategrey;
+         margin-right: 20%;
+         border-radius: 10%;
+         border: 3px solid blue;
+         width:50%;
+         margin-left: auto;
+         margin-right: auto;}
+       
+.grdPersonalDetails{
+         margin-top:5%;
+         padding:2%;
+         padding-top:5%;
+         background-color: lightslategrey;
+         margin-left: auto;
+         margin-right: auto;
+         border-radius: 10%;
+         border: 2px solid blue;
+         font-size: 20px;
+         width:100%;}
+		
+.grdInsuranceDetails{
+         margin-top:10%;
+         padding:2%;
+		 padding-top:5%;
+         background-color: lightslategrey;
+         margin-left: auto;
+         margin-right: auto;
+         border-radius: 10%;
+         border: 2px solid blue;
+         font-size: 20px;
+         width:100%;}
+
+       .otherDetails1{
+         position: fixed;
+
+         padding: 2%;
+         background-color: dimgray;
+
+         border-radius: 10%;
+         border: 2px solid blue;
+         font-size: 15px;
+         width:10%;}
+
+
+       .otherDetails2{
+         position: fixed;
+          margin-left:85%;
+         padding: 2%;
+         background-color: dimgray;
+
+         border-radius: 10%;
+         border: 2px solid blue;
+         font-size: 15px;
+         width:10%;}
+
+    #timer{
+      font-size: 100%;
+      background-color: white;
+      padding: 7.5%;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 50%;
+      border: 3px solid blue;
+    }
+
+
+       .tooltip {
+         position: relative;
+         display: inline-block;
+         border-bottom: 1px dotted black;
+       }
+
+       .tooltip .tooltiptext {
+         visibility: hidden;
+         width: 250%;
+         background-color: #555;
+         color: #fff;
+         text-align: center;
+         border-radius: 6px;
+         border: 2px solid deepskyblue;
+         padding: 5px 0;
+         position: absolute;
+         z-index: 1;
+         bottom: 125%;
+         left: 50%;
+         margin-left: -60px;
+         opacity: 0;
+         transition: opacity 0.7s;
+       }
+
+       .tooltip .tooltiptext::after {
+         content: "";
+         position: absolute;
+         top: 100%;
+         left: 50%;
+         margin-left: -5px;
+         border-width: 5px;
+         border-style: solid;
+         border-color: #555 transparent transparent transparent;
+       }
+
+       .tooltip:hover .tooltiptext {
+         visibility: visible;
+         opacity: 1;
+       }
+
+
+
+    
+  </style>
+    
+    <title></title>
+    <meta charset='utf-8'> 
+
+  </head>
+  <body>
+
+
+
+
+  <div class="otherDetails1">
+    Time left until page Expires:<br><br><span id="timer"></span>
+  </div>
+
+
+
+
+
+  <div class="otherDetails2">
+  <form action="" name="form">
+    <p>
+      Estimated total cost:<br>
+      <input type="text" name="cost" readonly size="5"
+             style="border: 2px solid blue;  border-radius:50%; background-color: white; padding:5%" text="0"; /></p>
+  </form>
+  </div>
+
+
+
+  <div class="form1">
+  <h1>CAR INSURANCE CALCULATOR</h1>
+
+
+
+
+  <div class="grdPersonalDetails">
+<form action="Results.html" onsubmit="validationFunction()" method="get"  enctype="text/plain" name="details">
+  <p id="lblName"> Name:</p>
+  <input type="text" id="txtName" name="name"  placeholder="ENTER YOUR NAME HERE" style="font-size: 15px; height: 25px; width:90%;; border-radius: 5%;">
+
+
+
+
+<br>
+<br>
+  <p id="lblAge"> Age:</p>
+  <input type="text" id="txtAge" name="Age" onchange="calcAge()" placeholder="ENTER YOUR AGE HERE" style="font-size: 15px; height: 25px; width:40%;; border-radius: 5%;">
+  
+
+
+
+
+<br>
+<br>
+  <p id="lblGender"> Gender:</p>
+  <input type="radio"  id="radGenderM" onclick="calcGender()" value="male"   name="gender" style="height: 25px; width:20%;">Male
+  <input type="radio"  id="radGenderF" onclick="calcGender()" value="female" name="gender"style="height: 25px; width:20%;">Female
+  <br>
+  <br>
+  <p id="lblPhone"> Telephone:</p>
+  <input type="text"  id="txtPhone" name="phone" placeholder="###-#######" style="font-size: 15px; height: 25px; width:40%;; border-radius: 5%;">
+<br>
+<br> 
+
+
+</form>
+
+   
+  </div>
+  
+  
+   <div class="grdInsuranceDetails">
+<form name="details2">
+  <p id="lblPolicyDate"> Policy Start Date:</p>
+  <input type="date" onclick="myFunction()"  id="txtPolicyDate" placeholder="MM-DD-YYYY" min="1980-01-01" style="font-size: 15px; height: 25px; width:90%;; border-radius: 5%;">
+
+
+  <script>
+      function myFunction() {
+          document.getElementById("txtPolicyDate").min = Date.now();
+
+      }
+  </script>
+
+
+
+
+<br>
+<br>
+
+
+  <!--https://www.w3schools.com/howto/howto_css_tooltip.asp
+  -Code for tooltips from W3SCHOOLS-->
+  <div class="tooltip"> <p id="lblCover">  Type of cover:</p>
+
+    <span class="tooltiptext">Choose between Fully comprehensive insurance or third party fire and theft</span>
+  </div>
+<select style="font-size: 17px; height: 25px; width:90%;; border-radius: 5%;">
+  <option id="cboCOVER">Select a cover</option>
+  <option id="cboFC" onclick="calcCover()" value="FC">Fully Comprehensive</option>
+  <option id="cboTP" onclick="calcCover()" value="TP">Third Party Fire and Theft</option>
+</select>
+
+
+
+
+
+<br>
+<br>
+
+  <p id="lblMake">  Make Of Car:</p>
+<select name="cboMake" style="font-size: 17px; height: 25px; width:90%;; border-radius: 5%;">
+  <option id="cboMAKE">Choose a make</option>
+  <option onclick="fillComboBox()" value="mercedes">Mercedes</option>
+  <option onclick="fillComboBox()" value="mini">Mini</option>
+  <option onclick="fillComboBox()" value="ford">Ford</option>
+  <option onclick="fillComboBox()" value="vauxhall">Vauxhall</option>
+  <option onclick="fillComboBox()" value="Nissan">Nissan</option>
+</select>
+
+
+
+
+<br>
+<br>
+  <p id="lblModel"  >Model:</p>
+<select name="cboModel" style="font-size: 17px; height: 25px; width:90%;; border-radius: 5%;">
+</select>
+  <br>
+<br>
+
+
+
+
+
+  <p id="lblFuel">Fuel Type:</p>
+<select style="font-size: 17px; height: 25px; width:90%;; border-radius: 5%;">
+  <option id="cboFUEL" >Select a fuel type</option>
+  <option id="cboDiesel" onclick="calcFuel()" value="Diesel">Diesel</option>
+  <option id="cboPetrol" onclick="calcFuel()" value="Petrol">Petrol</option>
+  <option id="cboHybrid" onclick="calcFuel()" value="Hybrid">Hybrid</option>
+</select>
+  <br>
+<br>
+
+
+
+
+
+  <p id="lblCarAge"> Age of Car</p>
+  <input type="text" onchange="calcCarAge()" id="txtCarAge" name="age" placeholder="# OF YEARS" style="font-size: 15px; height: 25px; width:90%;; border-radius: 5%;">
+
+
+
+
+
+  <br>
+<br>
+
+  <div class="tooltip"><p id="lblCLaims"> Claims free for *</p>
+    <span class="tooltiptext">Choose how many years you have been claims free for...</span>
+  </div>
+<select style="font-size: 17px; height: 25px; width:90%;; border-radius: 5%;">
+  <option id="cboCLAIMS">Select years of claim free</option>
+  <option id="cbo1" onclick="calcClaims()" value="1">1 Year</option>
+  <option id="cbo2" onclick="calcClaims()" value="2">2 Year</option>
+  <option id="cbo3" onclick="calcClaims()" value="3">3 Year</option>
+  <option id="cbo4" onclick="calcClaims()" value="4">3 Year</option>
+  <option id="cbo5" onclick="calcClaims()" value="5">>=5 Year</option>
+</select>
+
+
+
+
+
+
+  <br>
+<br>
+  <p id="lblMileage"> Mileage</p>Car Mileage<br>
+  <input type="text" id="txtMileage" onchange="calcMileage()" name="mileage" placeholder="MILEAGE" style="font-size: 15px; height: 25px; width:90%;; border-radius: 5%;">
+   <br>
+<br>
+
+
+
+
+
+  <p id="lblCarValue"> Value of Car</p>
+  <input type="text" id="txtCarValue" onchange="calcCarValue()" name="Value" placeholder="VALUE" style="font-size: 15px; height: 25px; width:90%;; border-radius: 5%;">
+
+<br><br> <br><br>
+
+
+
+  <p id="lblSecurity"> Security</p>
+  <input type="radio" id="radSecurity1" onclick="calcSecurity()" name="security" value="none" style="height: 20px; width:15%;">None   <br>
+  <input type="radio" id="radSecurity2" onclick="calcSecurity()" name="security" value="Alarm" style="height: 20px; width:15%;">Alarm  <br>
+  <input type="radio" id="radSecurity3" onclick="calcSecurity()" name="security" value="Immobiliser" style="height: 20px; width:15%;">Immobiliser <br>
+  <input type="radio" id="radSecurity4" onclick="calcSecurity()" name="security" value="AandI" style="height: 20px; width:15%;">Alarm and Immobiliser<br>
+  <input type="radio" id="radSecurity5" onclick="calcSecurity()" name="security" value="All" style="height: 20px; width:15%;">Tracking Device, Alarm and Immobiliser <br> <br><br>
+
+
+
+
+
+
+
+  <div class="tooltip">  <p id="lblUsage"> What is the car being used for</p>
+    <span class="tooltiptext">Is the car being used for social domestic and pleasure uses? or is it a class 1 usage?</span>
+  </div>  <br>
+  <input type="radio" id="radUsage1" onclick="calcUsage()" value="SDP" name="usage"style="height: 20px; width:15%;"  >Social, Domestic, and Pleasure<br>
+  <input type="radio" id="radUsage2" onclick="calcUsage()" value="C1U" name="usage"style="height: 20px; width:15%;">Class 1 use<br>
+  <br><br><br>
+
+
+
+
+
+
+
+
+
+  <input type="button" onclick="validationFunction()" name="Calculate" value="Calculate" style="font-size: 110%; margin-left: 40%" > <br><br><br>
+</form>
+
+   
+  </div>
+  
+  </div>
+
+  <script>
+
+      var TotalCost =0;
+
+      var valAge=0;
+      var valGenderCost=0;
+      var valCover=0;
+      var valFuel=0;
+      var valCarAge=0;
+      var valClaims=0;
+      var valMileage=0;
+      var valOfCar=0;
+      var valSecurity=0
+      var valUsageCost=0
+
+
+
+
+      function calcAge() {
+
+          TotalCost -= valAge;
+          if(!isNaN(document.getElementById("txtAge").value) && document.getElementById("txtAge").value == "")
+          {valAge = 0;}
+          if(!isNaN(document.getElementById("txtAge").value) && document.getElementById("txtAge").value < 25 && document.getElementById("txtAge").value > 0)
+          {valAge = 500;}
+          if(!isNaN(document.getElementById("txtAge").value) && (document.getElementById("txtAge").value >= 25 && document.getElementById("txtAge").value<=30))
+          {valAge = 350;}
+          if(!isNaN(document.getElementById("txtAge").value) && (document.getElementById("txtAge").value >30 && document.getElementById("txtAge").value <=65))
+          {valAge = 200;}
+          if(!isNaN(document.getElementById("txtAge").value) && document.getElementById("txtAge").value > 65)
+          {valAge = 500;}
+
+          TotalCost += valAge;
+          document.form.cost.value = "€" + TotalCost;
+      }
+
+
+      function calcGender() {
+
+          TotalCost -= valGenderCost;
+
+          if(document.details.gender.value == "male")
+          {valGenderCost = 400;
+          TotalCost += valGenderCost;}
+          else if(document.details.gender.value == "female")
+          {valGenderCost = 250;
+              TotalCost += valGenderCost;}
+
+          document.form.cost.value = "€" + TotalCost;
+      }
+
+
+
+      function calcCover() {
+
+          TotalCost -= valCover;
+
+
+          if(document.getElementById("cboFC").selected)
+          {valCover = 400;}
+          else{valCover = 200;}
+
+          TotalCost += valCover;
+          document.form.cost.value = "€" + TotalCost;
+      }
+
+
+      function calcFuel() {
+
+          TotalCost -= valFuel;
+
+          if(document.getElementById("cboDiesel").selected)
+          {valFuel = 50;}
+          else if(document.getElementById("cboPetrol").selected)
+          {valFuel = 40;}
+          else{valFuel = 20;}
+
+          TotalCost += valFuel;
+          document.form.cost.value = "€" + TotalCost;
+
+      }
+
+      function calcCarAge() {
+
+          TotalCost -= valCarAge;
+
+          if(!isNaN(document.getElementById("txtCarAge").value) && document.getElementById("txtCarAge").value =="")
+          {valCarAge = 0;}
+          if(!isNaN(document.getElementById("txtCarAge").value) && document.getElementById("txtCarAge").value < 3 && document.getElementById("txtCarAge").value> 0)
+          {valCarAge = 100;}
+          if(!isNaN(document.getElementById("txtCarAge").value) && (document.getElementById("txtCarAge").value >= 3 && document.getElementById("txtCarAge").value<=6))
+          {valCarAge = 70;}
+          if(!isNaN(document.getElementById("txtCarAge").value) && (document.getElementById("txtCarAge").value >6 && document.getElementById("txtCarAge").value <=10))
+          {valCarAge = 50;}
+          if(!isNaN(document.getElementById("txtCarAge").value) && document.getElementById("txtCarAge").value > 10)
+          {valCarAge = 20;}
+
+          TotalCost += valCarAge;
+          document.form.cost.value = "€" + TotalCost;
+      }
+
+
+
+      function calcClaims() {
+
+          TotalCost -= valClaims;
+
+          if(document.getElementById("cbo1").selected)
+          {valClaims = 100;}
+          else if(document.getElementById("cbo2").selected)
+          {valClaims = 80;}
+          else if(document.getElementById("cbo3").selected)
+          {valClaims = 60;}
+          else if(document.getElementById("cbo4").selected)
+          {valClaims = 40;}
+          else{valClaims = 20;}
+
+          TotalCost += valClaims;
+          document.form.cost.value = "€" + TotalCost;
+
+      }
+
+
+      function calcMileage() {
+
+          TotalCost -= valMileage;
+
+          if(!isNaN(document.getElementById("txtMileage").value) && document.getElementById("txtMileage").value =="")
+          {valMileage = 0;}
+          if(!isNaN(document.getElementById("txtMileage").value) && document.getElementById("txtMileage").value < 15000 && document.getElementById("txtMileage").value > 0)
+          {valMileage = 30;}
+          if(!isNaN(document.getElementById("txtMileage").value) && (document.getElementById("txtMileage").value >= 15000 && document.getElementById("txtMileage").value<=25000))
+          {valMileage = 40;}
+          if(!isNaN(document.getElementById("txtMileage").value) && (document.getElementById("txtMileage").value >25000))
+          {valMileage = 50;}
+
+
+
+          TotalCost += valMileage;
+          document.form.cost.value = "€" + TotalCost;
+      }
+
+
+      function calcCarValue() {
+
+          TotalCost -= valOfCar;
+
+          if(!isNaN(document.getElementById("txtCarValue").value) && document.getElementById("txtCarValue").value =="")
+          {valOfCar = 0;}
+          else
+              valOfCar = document.getElementById("txtCarValue").value / 10
+
+
+          TotalCost += valOfCar;
+          document.form.cost.value = "€" + TotalCost;
+      }
+
+
+
+      function calcSecurity() {
+
+          TotalCost -= valSecurity;
+
+          if (document.details2.security.value == "none") {
+              valSecurity = 100;
+              TotalCost += valSecurity;
+          }
+           if (document.details2.security.value == "Alarm") {
+              valSecurity = 70;
+              TotalCost += valSecurity;
+          }
+
+
+           if (document.details2.security.value == "Immobiliser") {
+              valSecurity = 50;
+              TotalCost += valSecurity;
+          }
+
+           if (document.details2.security.value == "AandI") {
+              valSecurity = 30;
+              TotalCost += valSecurity;
+          }
+
+           if (document.details2.security.value == "All") {
+              valSecurity = 10;
+              TotalCost += valSecurity;
+          }
+
+
+          document.form.cost.value = "€" + TotalCost;
+
+      }
+
+
+      function calcUsage() {
+
+          TotalCost -= valUsageCost;
+
+          if(document.details2.usage.value == "SDP")
+          {valUsageCost = 30;
+              TotalCost += valUsageCost;}
+          else if(document.details2.usage.value == "C1U")
+          {valUsageCost = 50;
+              TotalCost += valUsageCost;}
+
+          document.form.cost.value = "€" + TotalCost;
+      }
+
+     /* document.getElementById("lblCover").onmouseout  = function() {hoverTypeOfCoverOUT()};
+      document.getElementById("lblCover").onmouseover = function() {hoverTypeOfCover()};
+
+      function hoverTypeOfCoverOUT() {
+
+          var parent = document.getElementById("div1");
+          var child = document.getElementById("p");
+          parent.removeChild(child);
+      }
+
+      function hoverTypeOfCover() {
+
+          var para = document.createElement("p");
+          var node = document.createTextNode("This is new.");
+          para.appendChild(node);
+
+          var parent = document.getElementById("div1");
+          var child = document.getElementById("p");
+          parent.insertBefore(para, child);
+          }*/
+
+
+
+
+
+
+
+//https://codepen.io/ishanbakshi/pen/pgzNMv
+//Timer script was gotten from this page
+
+      document.getElementById('timer').innerHTML =
+          04 + ":" + 01;
+      startTimer();
+
+      function startTimer() {
+          var presentTime = document.getElementById('timer').innerHTML;
+          var timeArray = presentTime.split(/[:]+/);
+          var m = timeArray[0];
+          var s = checkSecond((timeArray[1] - 1));
+          if(s==59){m=m-1}
+          if(m<0)
+          {
+              window.location.href="Timeout.html";}
+
+          document.getElementById('timer').innerHTML = m + ":" + s;
+
+          setTimeout(startTimer, 1000);
+
+
+      }
+
+      function checkSecond(sec) {
+          if (sec < 10 && sec >= 0) {sec = "0" + sec}; // add zero in front of numbers < 10
+          if (sec < 0) {sec = "59"};
+          return sec;
+      }
+
+
+
+
+
+      function validationFunction() {
+
+
+var valid = true;
+//*********************************************************************************************************************************************************************//
+
+          if (document.getElementById("txtName").value == "") {
+              window.alert("Please enter a value for your Name");
+              document.getElementById("lblName").style.color = "red";
+              document.getElementById("txtName").focus();
+              document.getElementById("txtName").value = ""
+              valid = false;
+          }
+
+          else {
+              document.getElementById("lblName").style.color = "black";
+          }
+
+
+//*********************************************************************************************************************************************************************//
+
+          if (isNaN(document.getElementById("txtAge").value) || document.getElementById("txtAge").value == "") {
+              window.alert("Please enter a NUMERIC value for your Age");
+              document.getElementById("lblAge").style.color = "red";
+              document.getElementById("txtAge").focus();
+              document.getElementById("txtAge").value = ""
+              valid = false;
+
+          }
+
+          else {
+              document.getElementById("lblAge").style.color = "black";
+
+
+          }
+
+
+//*********************************************************************************************************************************************************************//
+
+          if (!document.getElementById("radGenderM").checked && !document.getElementById("radGenderF").checked) {
+              alert("Please select a gender");
+              document.getElementById("lblGender").style.color = "red";
+              valid = false;
+          }
+
+          else {
+              document.getElementById("lblGender").style.color = "black";
+          }
+
+
+//*********************************************************************************************************************************************************************//
+
+//Telephone regex format gotten from
+// https://www.w3resource.com/javascript/form/phone-no-validation.php
+
+          var phoneno = /^\(?([0-9]{3})\)?[-\ ]?([0-9]{7})$/;
+          if (!document.getElementById("txtPhone").value.match(phoneno)) {
+              window.alert("Please enter a correct Phone Number");
+              document.getElementById("lblPhone").style.color = "red";
+              document.getElementById("txtPhone").focus();
+              document.getElementById("txtPhone").value = ""
+              valid = false;
+          }
+
+          else {
+              document.getElementById("lblPhone").style.color = "black";
+          }
+
+//*********************************************************************************************************************************************************************//
+
+          if(document.getElementById("cboCOVER").selected)
+          {window.alert("Please enter a Cover Type");
+              document.getElementById("lblCover").style.color = "red";
+              valid = false;}
+
+          else {
+              document.getElementById("lblCover").style.color = "black";
+          }
+
+
+//*********************************************************************************************************************************************************************//
+
+
+          if(document.getElementById("cboMAKE").selected)
+          {window.alert("Please enter a Make");
+              document.getElementById("lblMake").style.color = "red";
+              valid = false;}
+
+          else {
+              document.getElementById("lblMake").style.color = "black";
+          }
+
+
+
+//*********************************************************************************************************************************************************************//
+
+
+          if(document.getElementById("cboFUEL").selected)
+          {window.alert("Please select a fuel type");
+              document.getElementById("lblFuel").style.color = "red";
+              valid = false;}
+
+          else {
+              document.getElementById("lblFuel").style.color = "black";
+          }
+
+//*********************************************************************************************************************************************************************//
+
+
+          if(document.getElementById("cboCLAIMS").selected)
+          {window.alert("Please select years claim free");
+              document.getElementById("lblClaims").style.color = "red";
+              valid = false;}
+
+          else {
+              document.getElementById("lblClaims").style.color = "black";
+          }
+
+
+
+//*********************************************************************************************************************************************************************//
+
+
+          if (isNaN(document.getElementById("txtCarAge").value) || document.getElementById("txtCarAge").value == "") {
+              window.alert("Please enter a NUMERIC value for your Cars Age");
+              document.getElementById("lblCarAge").style.color = "red";
+              document.getElementById("txtCarAge").focus();
+              document.getElementById("txtCarAge").value = ""
+              valid = false;
+          }
+
+          else {
+              document.getElementById("lblCarAge").style.color = "black";
+
+
+          }
+
+//*********************************************************************************************************************************************************************//
+
+          if (isNaN(document.getElementById("txtMileage").value) || document.getElementById("txtMileage").value == "") {
+              window.alert("Please enter a NUMERIC value for your Cars Mileage");
+              document.getElementById("lblMileage").style.color = "red";
+              document.getElementById("txtMileage").focus();
+              document.getElementById("txtMileage").value = ""
+              valid = false;
+          }
+
+          else {
+              document.getElementById("lblMileage").style.color = "black";
+
+          }
+
+
+//*********************************************************************************************************************************************************************//
+
+
+          if (isNaN(document.getElementById("txtCarValue").value) || document.getElementById("txtCarValue").value == "") {
+              window.alert("Please enter a NUMERIC value for your Cars Value");
+              document.getElementById("lblCarValue").style.color = "red";
+              document.getElementById("txtCarValue").focus();
+              document.getElementById("txtCarValue").value = ""
+              valid = false;
+          }
+
+          else {
+              document.getElementById("lblCarValue").style.color = "black";
+          }
+//*********************************************************************************************************************************************************************//
+
+
+          if (!document.getElementById("radSecurity1").checked &&
+              !document.getElementById("radSecurity2").checked &&
+              !document.getElementById("radSecurity3").checked &&
+              !document.getElementById("radSecurity4").checked &&
+              !document.getElementById("radSecurity5").checked) {
+              alert("Please select a Security");
+              document.getElementById("lblSecurity").style.color = "red";
+              valid = false;
+          }
+
+          else {
+              document.getElementById("lblSecurity").style.color = "black";
+          }
+
+
+//*********************************************************************************************************************************************************************//
+
+
+          if (!document.getElementById("radUsage1").checked && !document.getElementById("radUsage2").checked) {
+              alert("Please select a Usage");
+              document.getElementById("lblUsage").style.color = "red";
+              valid = false;
+          }
+
+          else {
+              document.getElementById("lblUsage").style.color = "black";
+          }
+
+
+
+
+          if(valid == true)
+          {
+              window.location.href="Results.html";
+          }
+
+
+
+
+      }
+
+
+
+
+              function fillComboBox(){
+
+              if (document.details2.cboMake.options[1].selected) {
+
+
+                  var Hatchback = new Option("Hatchback", "Hatchback");
+                  var Saloon = new Option("Saloon", "Saloon");
+                  var Estate = new Option("Estate", "Estate");
+                  var Coupe = new Option("Coupe", "Coupe");
+                  var SUV = new Option("SUV", "SUV");
+
+                  document.details2.cboModel.options[0] = Hatchback;
+                  document.details2.cboModel.options[1] = Saloon;
+                  document.details2.cboModel.options[2] = Estate;
+                  document.details2.cboModel.options[3] = Coupe;
+                  document.details2.cboModel.options[4] = SUV;
+              }
+
+
+              else if (document.details2.cboMake.options[2].selected) {
+
+
+                      var Cooper = new Option("Cooper", "Cooper");
+                      var Convertable = new Option("Convertable", "Convertable");
+                      var Clubman = new Option("Clubman", "Clubman");
+                      var Hatch = new Option("Hatch", "Hatch");
+                      var CountryMan = new Option("CountryMan", "CountryMan");
+
+
+                      document.details2.cboModel.options[0] = Cooper;
+                      document.details2.cboModel.options[1] = Convertable;
+                      document.details2.cboModel.options[2] = Clubman;
+                      document.details2.cboModel.options[3] = Hatch;
+                      document.details2.cboModel.options[4] = CountryMan;
+                  }
+
+
+              else if (document.details2.cboMake.options[3].selected) {
+
+
+                  var Bronco = new Option("Bronco", "Bronco");
+                  var EcoSport = new Option("EcoSport", "EcoSport");
+                  var Fiesta = new Option("Fiesta", "Fiesta");
+                  var Edge = new Option("Edge", "Edge");
+                  var Escape = new Option("Escape", "Escape");
+
+
+                  document.details2.cboModel.options[0] = Bronco;
+                  document.details2.cboModel.options[1] = EcoSport;
+                  document.details2.cboModel.options[2] = Fiesta;
+                  document.details2.cboModel.options[3] = Edge;
+                  document.details2.cboModel.options[4] = Escape;
+              }
+
+
+              else if (document.details2.cboMake.options[4].selected) {
+
+
+                  var Astra = new Option("Astra", "Astra");
+                  var Corsa = new Option("Corsa", "Corsa");
+                  var Mokka = new Option("Mokka", "Mokka");
+                  var Adam = new Option("Adam", "Adam");
+                  var Viva = new Option("Viva", "Viva");
+
+
+
+                  document.details2.cboModel.options[0] = Astra;
+                  document.details2.cboModel.options[1] = Corsa;
+                  document.details2.cboModel.options[2] = Mokka;
+                  document.details2.cboModel.options[3] = Adam;
+                  document.details2.cboModel.options[4] = Viva;
+
+
+
+              }
+
+
+              else if (document.details2.cboMake.options[5].selected) {
+
+
+                  var Atima = new Option("Atima", "Atima");
+                  var Armada = new Option("Armada", "Armada");
+                  var Frontier = new Option("Frontier", "Frontier");
+                  var Juke = new Option("Juke", "Juke");
+                  var GTR = new Option("GTR", "GTR");
+
+
+
+                  document.details2.cboModel.options[0] = Atima;
+                  document.details2.cboModel.options[1] = Armada;
+                  document.details2.cboModel.options[2] = Frontier;
+                  document.details2.cboModel.options[3] = Juke;
+                  document.details2.cboModel.options[4] = GTR;
+
+
+
+              }
+
+
+
+
+
+
+                  localStorage.setItem('TotalCost','TotalCost');
+                  localStorage.setItem('valAge','valAge');
+                  localStorage.setItem('valGenderCost','valGenderCost');
+                  localStorage.setItem('valCover','valCover');
+                  localStorage.setItem('valFuel','valFuel');
+                  localStorage.setItem('valCarAge','valCarAge');
+                  localStorage.setItem('valClaims','valClaims');
+                  localStorage.setItem('valMileage','valMileage');
+                  localStorage.setItem('valOfCar','valOfCar');
+                  localStorage.setItem('valSecurity','valSecurity');
+                  localStorage.setItem('valUsageCost','valUsageCost');
+          }
+
+
+  </script>
+
+  </body>
+</html>

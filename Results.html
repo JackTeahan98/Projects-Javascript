@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang='cs'>
+  <head>
+    <style>
+
+
+      h1{color: white;
+         font-size: 100%}
+      h2{color: white;
+        font-size: 100%}
+
+      body{font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background-color: #171716;}
+
+
+
+    </style>
+
+  </head>
+  <body>
+
+
+  <h1>
+
+
+
+    Your form has been submitted!</h1>
+
+
+
+  <h2>
+
+
+
+    You entered the following data:</h2>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+
+
+
+      //Return the querystring part of a URL.
+
+
+      var formData = location.search;
+
+      //This method extracts the characters in a string between "start" and "end", not including "end" itself.
+
+
+      formData = formData.substring(1, formData.length);
+
+      //The indexOf() method returns the position of the first occurrence of a specified value in a string.
+      //This method returns -1 if the value to search for never occurs.
+
+
+      while (formData.indexOf("+") != -1) {
+
+
+
+          formData = formData.replace("+", " ");
+
+
+
+      }
+
+      //The decodeURI() function is used to decode a URI. Remove %20 etc
+      formData = decodeURI(formData);
+
+
+      var formArray = formData.split("&");
+
+      //Split a string into an array of substrings:
+
+
+      document.write("<p>");
+
+
+
+      for (var i=0; i < formArray.length; ++i) {
+
+
+
+          document.writeln(formArray[i] + "<br />");
+
+
+
+      }
+
+
+
+      document.write("</p>");
+
+
+
+
+
+
+  </script>
+
+
+
+
+
+  </body>
+
+
+</html>
